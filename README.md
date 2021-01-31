@@ -103,3 +103,6 @@ Para ello tenemos que [instalarle el firmware adecuado](https://www.elecfreaks.c
 Todas las imágenes son cortesía de Elecfreaks
 
 
+## Vídeos y ejemplos
+
+[Test Nezha](https://makecode.microbit.org/_YHgP9t55kUzm)
