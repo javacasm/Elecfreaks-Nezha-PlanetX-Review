@@ -4,7 +4,7 @@ Nuestros amigos de [micro-log](https://micro-log.com) y [Elecfreaks](https://ele
 
 Es una mezcla estupenda de kit electrónico: complentos y sensores para micro:bit y piezas de construcción, que nos va a permitir crear nuestros propios proyectos. Eso sí desde el principio nos proporcionan muchos ejemplos para aprender a usarlo.
 
-Seguiremos probándolo, con lo que esta documentacón irá creciendo.
+Seguiremos probándolo, con lo que esta documentación irá creciendo.
 
 
 ### Revisión
