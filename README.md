@@ -96,6 +96,28 @@ También podemos programarla con micropython usando el [módulo PlanetX](https:/
 
 [Nezha documentation](https://www.elecfreaks.com/learn-en/microbitExtensionModule/nezha.html)
 
+
+```python
+import enum # Definiciones de los puertos J1-J4
+import trimpot # potenciometro
+import nezha # control de servos y motores
+import led
+
+def testMotores():
+    nezha = nezha.NEZHA()
+    nezha.set_motor(1,100)
+    nezha.set_servo(1,90)
+
+def testLedPot():
+    pot = trimpot.TRIMPOT(enum.J1)
+    ledRojo = led.LED(enum.J3)
+    ledRojo.set_led(1,50) # Activa el led al 50%
+
+while True:
+    valorPot = pot.get_analog() # Entre 0 y 1023
+    ledRojo.set_led(1,100*valorPot/1023)
+```
+
 ### Programación con bloques
 
 Podemos programar nuestra micro:bit con la placa Nezha conectada con bloques usando la extensión PlanetX
