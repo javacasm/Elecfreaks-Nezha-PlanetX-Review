@@ -1,6 +1,9 @@
-# Simply C - PlanetX / Nezha python API
+# Simply funtional PlanetX  python API
+# @javacasm
+# https://github.com/javacasm/Elecfreaks-Nezha-PlanetX-Review/tree/master/code/python
 # bassed in https://github.com/lionyhw/PlanetX_MicroPython
-from microbit import pin1, pin2, pin13, pin15,
+
+from microbit import pin1, pin2, pin13, pin15
 
 v = '0.6'
 

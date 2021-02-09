@@ -1,3 +1,8 @@
+# uPlanetX test
+# @javacasm
+# https://github.com/javacasm/Elecfreaks-Nezha-PlanetX-Review/tree/master/code/python
+# bassed in https://github.com/lionyhw/PlanetX_MicroPython & https://github.com/elecfreaks/pxt-nezha/blob/master/main.ts
+
 import uPlanetX
 
 v = '0.5'

@@ -96,6 +96,7 @@ También podemos programarla con micropython usando el [módulo PlanetX](https:/
 
 [Nezha documentation](https://www.elecfreaks.com/learn-en/microbitExtensionModule/nezha.html)
 
+Este es un ejemplo sencillo de uso del módulo de Elecfreaks. Lamentablemente da problemas de memoria al usarlo en la micro:bit V1.5, pero funciona bien en la V2
 
 ```python
 import enum # Definiciones de los puertos J1-J4
@@ -116,6 +117,108 @@ def testLedPot():
 while True:
     valorPot = pot.get_analog() # Entre 0 y 1023
     ledRojo.set_led(1,100*valorPot/1023)
+```
+
+#### Adaptación a micro:bit v1.5
+
+Reduciendo el código al mínimo, eliminando imports que no se necesitan he conseguido una miniversión capaz de controlar leds, motores y servos desde un potenciómetro en una micro:bit v1.5
+
+La base son estos 2 módulos que he llamado uNezha y uPlanetX (la u inicial se refieren a micro)
+
+```python
+# Simply funtional Nezha python API
+# bassed in https://github.com/lionyhw/PlanetX_MicroPython & https://github.com/elecfreaks/pxt-nezha/blob/master/main.ts
+
+from microbit import i2c
+
+v = '0.5'
+
+NEZHA_ADDR = 0x10
+
+bInitNezha = False
+
+def initNezha():
+    global bInitNezha
+    i2c.init()
+    print('Init i2c')
+    bInitNezha = True
+
+def set_motor( motor, speed):
+    """
+        motor: 1 - 4
+        speed: -100 - 100
+    """
+    global bInitNezha
+    if bInitNezha == False:
+        initNezha()
+
+    if speed < 0:
+        i2c.write(NEZHA_ADDR, bytearray([motor, 0x02, speed * -1, 0]))
+    else:
+        i2c.write(NEZHA_ADDR, bytearray([motor, 0x01, speed, 0]))
+
+
+def set_servo(servo, angle):
+    """
+        servo 1 - 4
+        angle 0 - 180
+    """
+    if bInitNezha == False:
+        initNezha()
+    i2c.write(NEZHA_ADDR, bytearray([0x09+servo , angle, 0, 0]))
+
+```
+
+y 
+
+```python
+# Simply funtional PlanetX  python API
+# bassed in https://github.com/lionyhw/PlanetX_MicroPython
+
+from microbit import pin1, pin2, pin13, pin15
+
+v = '0.6'
+
+# internal connection 
+j_pins = [pin1,pin2, pin13, pin15]
+
+
+def set_led(jPin, brightness):
+    """
+    jPin digital port 1 - 4 
+    brightness  0 - 1023
+    """
+    j_pins[jPin-1].write_analog(brightness)
+
+def get_analog(jPin):
+    """
+    jPin analog Port 1 - 2
+    return 0 - 1023 value
+    """
+    return j_pins[jPin-1].read_analog()
+
+```
+
+Lo que nos permite controlar fácilmente la posición de un servo con un potenciómetro
+
+```python
+import utime
+import uNezha
+import uPlanetX
+
+v = '0.5'
+
+def testPotServor():
+    print('Pot in J1 - Servo in S1')
+    lastValue = 0
+    while True:
+        val = uPlanetX.get_analog(1)
+        if val != lastValue:
+            angle = int(180*val/1023)
+            print('pot:{} angle:{}'.format(val, angle))
+            uNezha.set_servo(1,angle)
+            lastValue = val
+        utime.sleep(0.1)
 ```
 
 ### Programación con bloques
